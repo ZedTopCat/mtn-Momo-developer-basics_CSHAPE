@@ -1,0 +1,91 @@
+MTN MoMo
+mtn-momo-developer-basics
+
+All Contributors
+
+MTN MoMo Developer Basics is a repository aimed at giving developers a head start in interacting with the MTN MoMo API's found here: https://momodeveloper.mtn.com/
+
+Disclaimer: This repository is not officially affiliated with MTN
+General Guidelines
+
+The aim is to accommodate any framework, implementation or programming language. This repo will be organised by having individual branches catering to different solutions. Developers are free to contribute to any branch relevant to their skill or interest.
+
+At a bare minimum, you will be expected to register on the MTN MoMo Developer Portal and follow the Getting Started Guidelines to enable you to:
+
+    Subscribe To MTN MoMo API Products
+    Manage Your Subscriptions (Primary Key and Secondary Key)
+    Generate API User and API Key
+
+which will be necessary in interacting with the API using those credentials generated.
+Getting Started
+
+    Register Application
+
+    The first thing you need to do to get started, after registering on the MTN MoMo Developer Portal and signing in, is going to your User Profile Page where you will find two (2) sections, one for Your Subscriptions and another for Your Applications. Here you will need to click on Register application, under Your Applications, and enter details for your application. This step is necessary in order to avoid getting a 401 Error when trying to generate your Oauth 2.0 credentials under Sandbox User Provisioning.
+    MTN MoMo API Developer Register App
+
+    After saving the Register Application form, it will be submitted for approval, which should normally not take a long time.
+
+    Subscribe to MTN MoMo API Product
+
+    You can now visit the Products page to subscibe to a suitable product, you are not limited to just just one, four (4) are provided:
+        Collection Widget: Receive mobile money payments on your website through a USSD or QR code
+        Collections: Enable remote collection of bills, fees or taxes.
+        Disbursements: Automatically deposit funds to multiple users
+        Remittances: Remit funds to local recipients from the diaspora with ease
+
+    For each product, there are options to See full documentation and Subscribe. Below is an example for Colllection Widget.
+    MTN MoMo API Collection Widget Product
+
+    Select Subscribe and you will be redirected to subscription page:
+    MTN MoMo API Collection Widget Product
+
+    Then click the yellow Subscribe button to be subscribed to the product.
+
+    Now when you visit your User Profile Page, you should see products to which you are subscribed to under Your Subscriptions section. Below is an example:
+    MTN MoMo API Subscriptions
+
+    Create API User and API Key
+
+    Under API Sandbox, select Sandbox User Provisioning, you should be redirected to /apiuser - POST endpoint testing page. Click the yellow Try it button to test if your application was registered.
+    Sandbox User Provisioning apiuser - POST
+
+    If you have no registered application or not logged in to your account, you will get an error 401 Access Denied warning as shown below.
+    Sandbox User Provisioning apiuser - POST Try It Error 401
+
+    Otherwise, there will be no error 401 Access Denied warning and you should be able to create an API User. You will need to fill in X-Reference-Id and providerCallbackHost (if you will handle a callback URL, by replacing string with your callback URL), all other fields will be filled in automatically. According to the documentation, X-Reference-Id is a Version 4 'Universal Unique ID' (UUID), in order to quickly test this, you can generate a Version 4 UUID using this Online UUID Generator. Copy the generated UUID and paste in X-Reference-Id field. After clicking the yellow Send button, you should get a 201 Created success response. The version 4 UUID is now your API User.
+    Sandbox User Provisioning apiuser - POST Try It Pass
+
+    Using the API User created in the previous step, visit the /v1_0/apiuser/{X-Reference-Id}/apikey - POST endpoint testing page and paste it in the X-Reference-Id field, click the yellow Send button and you should get a 201 Created success reponse with your API Key.
+    Sandbox User Provisioning apiuser - POST apikey
+
+    Below is an example of the API Key response.
+
+        Date: Mon, 11 Nov 2019 13:59:08 GMT
+        Content-Length: 45
+        Content-Type: application/json; charset=utf-8
+
+        {
+        "apiKey": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+        }
+
+    Generating an access token
+
+    To call routes that require an access token, you first need to generate the token using the /token route. The /token route takes in an authorization header. The value to input here is the API User from the previous step and the API Key, in the following sequence API User:API Key, encoded in base64. Make sure that they are separated by a colon. To create it you can use online conversion tools, such as, base64encode.net or through downloadable packages, such as, base-64.
+
+    Before you paste in your newly created encoded API User and Key, make sure to prefix it with Basic . That is "Basic" with a space afterwards as in the following image.
+    MTN MOMO access token step
+
+    Automation
+
+    And that's it, you're ready to start testing on the MTN MoMo API Sandbox. But, you don't want to be copying the generated keys and storing them in *.txt files, to be reused later. We need to create an automated solution that sends requests and stores resposnse data in a database, to be used by a web or mobile application. Each branch in this repo will have a different solution in achieving this.
+
+Contribution Guidelines
+
+Contributions can be made through pull requests.
+
+    You can start by forking this repo
+    Contribute to a branch relevant to you, if it exists
+    Otherwise, create a new branch, for a new implementation, for example; REST, Java, React, Vue, Laravel, etc
+    Once you are ready and everything checks out, you can push to your forked repo and create a pull request against this repo
+    We will then review and approve
